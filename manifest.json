@@ -1,3 +1,8 @@
 {
-	"setup": "setup.mjs"
+	"namespace": "handyDandyNotebook",
+	"icon": "assets/notebook-icon.png",
+	"setup": "setup.mjs",
+	"load": [
+		"assets/notebook-style.css"
+	]
 }
