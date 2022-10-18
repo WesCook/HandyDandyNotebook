@@ -1,0 +1,8 @@
+.notebook {
+	padding: 0;
+    height: fit-content;
+}
+.notebook:hover,
+.notebook:focus {
+	opacity: 80%;
+}
