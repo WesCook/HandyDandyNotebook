@@ -6,3 +6,15 @@
 .notebook:focus {
 	opacity: 80%;
 }
+
+.notebook-textarea {
+	width: 100%;
+	height: 440px;
+	min-height: 100px;
+	max-height: calc(100vh - 170px);
+}
+.darkMode .notebook-textarea {
+	background-color: #383838;
+	color: white;
+}
+/* TODO: Test light and dark modes */
