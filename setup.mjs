@@ -1,12 +1,11 @@
 export function setup({ onCharacterLoaded, onInterfaceReady }) {
 	onCharacterLoaded(ctx => {
-		let version = 1;
+		let version = 2;
 		console.log("Handy Dandy Notebook : v" + version);
 	})
 
 	onInterfaceReady(ctx => {
 		ui.create(NotebookButton({ iconPath: ctx.getResourceUrl('assets/notebook-icon.png') }), document.getElementById("page-header-user-dropdown").parentNode.parentNode);
-		ui.create(NotebookModal(), document.getElementById("page-container"));
 	});
 }
 
@@ -15,17 +14,21 @@ function NotebookButton(props) {
 		$template: '#notebook-button',
 		iconPath: props.iconPath,
 		openNotebook() {
-			console.log("Button clicked!");
-			document.body.classList.add("modal-open");
-			let modal = document.getElementById("modal-notebook-window");
-			modal.classList.add("show")
-			modal.style.display = "block";
+			document.getElementById("notebook").blur();
+			Swal.fire({
+				title: "Handy Dandy Notebook",
+				html: "<textarea id='notebook-textarea' class='notebook-textarea'></textarea>",
+				showCloseButton: true,
+				showConfirmButton: false,
+				focusConfirm: false,
+				allowEnterKey: false,
+				width: "800px",
+				didOpen: () => {
+					document.getElementById("notebook-textarea").focus()
+				}
+			}).then(result => {
+				console.log("Save data");
+			});
 		}
-	};
-}
-
-function NotebookModal() {
-	return {
-		$template: '#notebook-modal',
 	};
 }

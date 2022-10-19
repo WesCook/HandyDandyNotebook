@@ -12,9 +12,10 @@
 	height: 440px;
 	min-height: 100px;
 	max-height: calc(100vh - 170px);
+	outline: none;
 }
 .darkMode .notebook-textarea {
 	background-color: #383838;
 	color: white;
+	border: 1px solid var(--synergy-border-bg);
 }
-/* TODO: Test light and dark modes */

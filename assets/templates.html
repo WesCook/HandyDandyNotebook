@@ -3,25 +3,3 @@
 		<img v-bind:src="iconPath" alt="Notebook" width="29" height="29">
 	</button>
 </template>
-
-<template id="notebook-modal">
-	<div class="modal" id="modal-notebook-window" tabindex="-1" style="display: none;" aria-modal="true" role="dialog">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content" style="height:100%;">
-				<div class="block block-themed block-transparent mb-0">
-					<div class="block-header bg-primary-dark">
-						<h3 class="block-title">Handy Dandy Notebook</h3>
-						<div class="block-options">
-							<button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
-								<i class="fa fa-fw fa-times"></i>
-							</button>
-						</div>
-					</div>
-					<div class="block-content block-content-full text-center">
-						<textarea class="notebook-textarea"></textarea>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</template>
