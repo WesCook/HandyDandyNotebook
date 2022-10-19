@@ -18,7 +18,14 @@ export function setup({ onCharacterLoaded, onInterfaceReady }) {
 		}
 		</style>`);
 
-		ui.create(NotebookButton(), document.getElementById("page-header-user-dropdown").parentNode.parentNode);
+		// Create notebook button
+		ui.create(NotebookButton(), document.body);
+
+		// Move element into more favourable position
+		// ui.create() lets us choose a parent, but not placement between elements
+		let target = document.getElementById("page-header-potions-dropdown").parentNode;
+		let notebook = document.getElementById("notebook");
+		target.insertAdjacentElement("beforebegin", notebook);
 	});
 }
 
