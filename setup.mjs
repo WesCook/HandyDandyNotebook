@@ -1,9 +1,4 @@
-export function setup({ onCharacterLoaded, onInterfaceReady }) {
-	onCharacterLoaded(ctx => {
-		let version = 3;
-		console.log("Handy Dandy Notebook : v" + version);
-	})
-
+export function setup({ onInterfaceReady }) {
 	onInterfaceReady(ctx => {
 		// Making icon available for CSS
 		// Uses custom properties which are resolved to their blob URIs here,
@@ -33,7 +28,10 @@ function NotebookButton() {
 	return {
 		$template: '#notebook-button',
 		openNotebook() {
+			// Remove focus from button for visuals
 			document.getElementById("notebook").blur();
+
+			// Trigger modal dialogue with notebook textarea
 			Swal.fire({
 				title: "Handy Dandy Notebook",
 				html: "<textarea id='notebook-textarea' class='notebook-textarea'></textarea>",
