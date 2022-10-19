@@ -1,6 +1,11 @@
 .notebook {
-	padding: 0;
-    height: fit-content;
+	width: 30px;
+	height: 31.19px;
+	background-image: var(--icon-light), linear-gradient(to right, #edf0f2, #edf0f2)  !important;
+	background-repeat: no-repeat !important;
+}
+.darkMode .notebook {
+	background-image: var(--icon-dark), linear-gradient(to right, #2d3542, #2d3542) !important;
 }
 .notebook:hover,
 .notebook:focus {

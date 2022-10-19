@@ -1,6 +1,6 @@
 {
 	"namespace": "handyDandyNotebook",
-	"icon": "assets/notebook-icon.png",
+	"icon": "assets/notebook-icon-dark.png",
 	"setup": "setup.mjs",
 	"load": [
 		"assets/templates.html",
