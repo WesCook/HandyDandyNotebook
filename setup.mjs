@@ -31,21 +31,29 @@ function NotebookButton() {
 			// Remove focus from button for visuals
 			document.getElementById("notebook").blur();
 
+			// Get notebook data
+			const ctx = mod.getContext(import.meta);
+			let notebookText = ctx.characterStorage.getItem("notebook");
+			if (notebookText === undefined) { // No data found, so let's initialize it
+				notebookText = "";
+				ctx.characterStorage.setItem("notebook", "");
+			}
+
 			// Trigger modal dialogue with notebook textarea
 			Swal.fire({
 				title: "Handy Dandy Notebook",
-				html: "<textarea id='notebook-textarea' class='notebook-textarea'></textarea>",
+				input: "textarea",
+				inputValue: notebookText,
 				showCloseButton: true,
 				showConfirmButton: false,
-				focusConfirm: false,
 				allowEnterKey: false,
-				width: "800px",
+				customClass: { container: 'notebook-modal' },
 				didOpen: () => {
-					document.getElementById("notebook-textarea").focus()
+					document.querySelector(".notebook-modal textarea").focus();
 				}
-			}).then(result => {
-				console.log("Save data");
-			});
+			}).then(() => {
+				ctx.characterStorage.setItem("notebook", Swal.getInput().value); // Grab input value and write to storage
+			})
 		}
 	};
 }

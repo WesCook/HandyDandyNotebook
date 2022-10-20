@@ -15,15 +15,16 @@
 	opacity: 80%;
 }
 
-/* Notebook text input */
-.notebook-textarea {
-	width: 100%;
+/* Notebook modal */
+.notebook-modal > .swal2-modal {
+	width: 900px;
+}
+.notebook-modal textarea {
 	height: 440px;
 	min-height: 100px;
 	max-height: calc(100vh - 170px);
-	outline: none;
 }
-.darkMode .notebook-textarea {
+.darkMode .notebook-modal textarea {
 	background-color: #383838;
 	color: white;
 	border: 1px solid var(--synergy-border-bg);
