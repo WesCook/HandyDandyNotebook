@@ -22,9 +22,8 @@ function createSettings(settings, Button, openNotebook) {
 		name: "button-position",
 		label: "Notebook Button Position",
 		default: "topbar",
-		onChange: () => {
-			// TODO: This is being called prematurely.  The setting hasn't updated yet when it's called.
-			Button.placeNotebookButton(openNotebook);
+		onChange: (buttonPosition) => {
+			Button.placeNotebookButton(openNotebook, buttonPosition);
 		},
 		options: [
 			{ value: "topbar", display: "Top Bar" },
