@@ -1,59 +1,49 @@
-export function setup({ onInterfaceReady }) {
+export async function setup({ loadModule, settings, onInterfaceReady }) {
+	// Modules
+	const Button = await loadModule("button.mjs");
+	const { openNotebook } = await loadModule("notebook.mjs");
+
+	// Settings
+	createSettings(settings, Button, openNotebook);
+
+	// Interface Setup
 	onInterfaceReady(ctx => {
-		// Making icon available for CSS
-		// Uses custom properties which are resolved to their blob URIs here,
-		// then set as the background image in styles.css.  Not my first choice
-		// of implementation, but <picture> tags can't change their source based
-		// on selectors (in this case body.darkMode), and data attributes are
-		// out because attr() doesn't work with url() objects until CSS level 5.
-		document.head.insertAdjacentHTML("beforeend", `<style>
-		.notebook {
-			--icon-light: url("${ctx.getResourceUrl("assets/notebook-icon-light.png")} ");
-			--icon-dark: url("${ctx.getResourceUrl("assets/notebook-icon-dark.png")}");
-		}
-		</style>`);
-
-		// Create notebook button
-		ui.create(NotebookButton(), document.body);
-
-		// Move element into more favourable position
-		// ui.create() lets us choose a parent, but not placement between elements
-		let target = document.getElementById("page-header-potions-dropdown").parentNode;
-		let notebook = document.getElementById("notebook");
-		target.insertAdjacentElement("beforebegin", notebook);
+		createIconCSS(ctx);
+		//Button.placeNotebookButton(openNotebook); // Setting callback actually fires on mod load, so there's no need to call initially right now
 	});
 }
 
-function NotebookButton() {
-	return {
-		$template: '#notebook-button',
-		openNotebook() {
-			// Remove focus from button for visuals
-			document.getElementById("notebook").blur();
+function createSettings(settings, Button, openNotebook) {
+	const sectionInterface = settings.section("Interface");
+	sectionInterface.add({
+		type: "dropdown",
+		name: "button-position",
+		label: "Notebook Button Position",
+		default: "topbar",
+		onChange: () => {
+			// TODO: This is being called prematurely.  The setting hasn't updated yet when it's called.
+			Button.placeNotebookButton(openNotebook);
+		},
+		options: [
+			{ value: "topbar", display: "Top Bar" },
+			{ value: "minibar", display: "Minibar" },
+			{ value: "sidebar", display: "Sidebar" }
+		]
+	});
+}
 
-			// Get notebook data
-			const ctx = mod.getContext(import.meta);
-			let notebookText = ctx.characterStorage.getItem("notebook");
-			if (notebookText === undefined) { // No data found, so let's initialize it
-				notebookText = "";
-				ctx.characterStorage.setItem("notebook", "");
-			}
-
-			// Trigger modal dialogue with notebook textarea
-			Swal.fire({
-				title: "Handy Dandy Notebook",
-				input: "textarea",
-				inputValue: notebookText,
-				showCloseButton: true,
-				showConfirmButton: false,
-				allowEnterKey: false,
-				customClass: { container: 'notebook-modal' },
-				didOpen: () => {
-					document.querySelector(".notebook-modal textarea").focus();
-				}
-			}).then(() => {
-				ctx.characterStorage.setItem("notebook", Swal.getInput().value); // Grab input value and write to storage
-			})
-		}
-	};
+// Making icon available for CSS
+// Uses custom properties which are resolved to their blob URIs here,
+// then set as the background image in styles.css.  Not my first choice
+// of implementation, but <picture> tags can't change their source based
+// on selectors (in this case body.darkMode), and data attributes are
+// out because attr() doesn't work with url() objects until CSS level 5.
+function createIconCSS(ctx) {
+	document.head.insertAdjacentHTML("beforeend",
+	`<style>
+	.notebook {
+		--icon-light: url("${ctx.getResourceUrl("assets/notebook-icon-light.png")}");
+		--icon-dark: url("${ctx.getResourceUrl("assets/notebook-icon-dark.png")}");
+	}
+	</style>`);
 }
