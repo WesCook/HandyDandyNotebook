@@ -1,3 +1,9 @@
-<template id="notebook-button">
-	<button id="notebook" class="notebook btn btn-sm ml-2" aria-haspopup="true" @click="clickedButton" title="Handy Dandy Notebook"></button>
+<template id="notebook-button-topbar">
+	<button id="notebook" class="notebook topbar btn btn-sm ml-2" aria-haspopup="true" @click="clickedButton" title="Handy Dandy Notebook"></button>
+</template>
+
+<template id="notebook-button-minibar">
+	<button id="notebook" class="minibar btn btn-sm btn-light" aria-haspopup="true" @click="clickedButton">
+		<div class="notebook"></div>
+	</button>
 </template>

@@ -18,16 +18,13 @@ function placeButtonInTopbar(cb) {
 	// Remove sidebar entry if it exists
 	sidebar.category("Modding").item("Handy Dandy Notebook").remove();
 
-	// Create notebook button if it doesn't already exist
+	// Recreate notebook button from template
 	let notebook = document.getElementById("notebook");
-	if (!notebook) {
-		ui.create(NotebookButton(cb), document.body);
-		notebook = document.getElementById("notebook");
+	if (notebook) {
+		notebook.remove();
 	}
-
-	// Update classes if necessary
-	notebook.classList.remove("minibar");
-	notebook.classList.add("topbar");
+	ui.create(NotebookButton("#notebook-button-topbar", cb), document.body);
+	notebook = document.getElementById("notebook");
 
 	// Insert into position
 	// ui.create() lets us choose a parent, but not placement between elements
@@ -39,16 +36,13 @@ function placeButtonInMinibar(cb) {
 	// Remove sidebar entry if it exists
 	sidebar.category("Modding").item("Handy Dandy Notebook").remove();
 
-	// Create notebook button if it doesn't already exist
+	// Recreate notebook button from template
 	let notebook = document.getElementById("notebook");
-	if (!notebook) {
-		ui.create(NotebookButton(cb), document.body);
-		notebook = document.getElementById("notebook");
+	if (notebook) {
+		notebook.remove();
 	}
-
-	// Update classes if necessary
-	notebook.classList.remove("topbar");
-	notebook.classList.add("minibar");
+	ui.create(NotebookButton("#notebook-button-minibar", cb), document.body);
+	notebook = document.getElementById("notebook");
 
 	// Insert into position
 	const minibar = document.getElementById("skill-footer-minibar");
@@ -72,9 +66,9 @@ function placeButtonInSidebar(cb) {
 }
 
 // Create button from template
-function NotebookButton(cb) {
+function NotebookButton(template, cb) {
 	return {
-		$template: "#notebook-button",
+		$template: template,
 		clickedButton() {
 			document.getElementById("notebook").blur(); // Remove focus from button for visuals
 			if (typeof cb === "function") {
