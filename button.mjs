@@ -2,6 +2,8 @@
 // Function is called again when user changes setting
 // Accepts callback to run when clicked
 export function placeNotebookButton(cb) {
+	cleanup();
+
 	const ctx = mod.getContext(import.meta);
 	const sectionInterface = ctx.settings.section("Interface");
 	const buttonPosition = sectionInterface.get("button-position");
@@ -14,17 +16,28 @@ export function placeNotebookButton(cb) {
 	}
 }
 
-function placeButtonInTopbar(cb) {
-	// Remove sidebar entry if it exists
-	sidebar.category("Modding").item("Handy Dandy Notebook").remove();
+// Remove old buttons, tooltips, and sidebar entries
+function cleanup() {
+	const notebook = document.getElementById("notebook");
 
-	// Recreate notebook button from template
-	let notebook = document.getElementById("notebook");
+	// Destroy tooltip if it exists
+	if (notebook && notebook._tippy) {
+		notebook._tippy.destroy();
+	}
+
+	// Delete node
 	if (notebook) {
 		notebook.remove();
 	}
+
+	// Remove sidebar entry if it exists
+	sidebar.category("Modding").item("Handy Dandy Notebook").remove();
+}
+
+function placeButtonInTopbar(cb) {
+	// Create notebook button
 	ui.create(NotebookButton("#notebook-button-topbar", cb), document.body);
-	notebook = document.getElementById("notebook");
+	const notebook = document.getElementById("notebook");
 
 	// Insert into position
 	// ui.create() lets us choose a parent, but not placement between elements
@@ -33,29 +46,24 @@ function placeButtonInTopbar(cb) {
 }
 
 function placeButtonInMinibar(cb) {
-	// Remove sidebar entry if it exists
-	sidebar.category("Modding").item("Handy Dandy Notebook").remove();
-
-	// Recreate notebook button from template
-	let notebook = document.getElementById("notebook");
-	if (notebook) {
-		notebook.remove();
-	}
+	// Create notebook button
 	ui.create(NotebookButton("#notebook-button-minibar", cb), document.body);
-	notebook = document.getElementById("notebook");
+	const notebook = document.getElementById("notebook");
 
 	// Insert into position
 	const minibar = document.getElementById("skill-footer-minibar");
 	minibar.appendChild(notebook);
+
+	// Create tooltip
+	tippy("#notebook.minibar", {
+		content: "<div class='text-center'><small>Handy Dandy Notebook</small></div>",
+		allowHTML: true,
+		placement: "left",
+		duration: [0, 0]
+	});
 }
 
 function placeButtonInSidebar(cb) {
-	// Destroy button
-	const notebook = document.getElementById("notebook");
-	if (notebook) {
-		notebook.remove()
-	}
-
 	// Add sidebar
 	const ctx = mod.getContext(import.meta);
 	sidebar.category("Modding").item("Handy Dandy Notebook", {

@@ -10,8 +10,8 @@
 .darkMode .notebook {
 	background-image: var(--icon-dark), linear-gradient(to right, #2d3542, #2d3542) !important;
 }
-.notebook:hover,
-.notebook:focus {
+.notebook.topbar:hover,
+.notebook.topbar:focus {
 	opacity: 80%;
 }
 
