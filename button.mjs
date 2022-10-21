@@ -1,8 +1,18 @@
 // Create and place notebook button based on user setting
 // Function is called again when user changes setting
 // Accepts callback to run when clicked
-export function placeNotebookButton(cb, buttonPosition) {
+export function placeNotebookButton(cb, newValue) {
 	cleanup();
+
+	// Get notebook button position
+	let buttonPosition;
+	if (newValue) { // If receiving update from settings change callback
+		buttonPosition = newValue;
+	} else { // Otherwise fall back to saved value
+		const ctx = mod.getContext(import.meta);
+		const sectionInterface = ctx.settings.section("Interface");
+		buttonPosition = sectionInterface.get("button-position");
+	}
 
 	switch (buttonPosition) {
 		case "topbar": placeButtonInTopbar(cb); break;

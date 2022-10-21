@@ -9,7 +9,7 @@ export async function setup({ loadModule, settings, onInterfaceReady }) {
 	// Interface Setup
 	onInterfaceReady(ctx => {
 		createIconCSS(ctx);
-		//Button.placeNotebookButton(openNotebook); // Setting callback actually fires on mod load, so there's no need to call initially right now
+		Button.placeNotebookButton(openNotebook);
 	});
 }
 
@@ -22,8 +22,8 @@ function createSettings(settings, Button, openNotebook) {
 		name: "button-position",
 		label: "Notebook Button Position",
 		default: "topbar",
-		onChange: (buttonPosition) => {
-			Button.placeNotebookButton(openNotebook, buttonPosition);
+		onChange: (newValue) => {
+			Button.placeNotebookButton(openNotebook, newValue);
 		},
 		options: [
 			{ value: "topbar", display: "Top Bar" },
