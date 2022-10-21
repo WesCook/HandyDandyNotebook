@@ -15,6 +15,8 @@ export async function setup({ loadModule, settings, onInterfaceReady }) {
 
 function createSettings(settings, Button, openNotebook) {
 	const sectionInterface = settings.section("Interface");
+
+	// Button Position
 	sectionInterface.add({
 		type: "dropdown",
 		name: "button-position",
@@ -29,6 +31,15 @@ function createSettings(settings, Button, openNotebook) {
 			{ value: "minibar", display: "Minibar" },
 			{ value: "sidebar", display: "Sidebar" }
 		]
+	});
+
+	// Show Animations
+	sectionInterface.add({
+		type: "switch",
+		name: "show-animations",
+		label: "Show Animations",
+		hint: "Show popup and leave animations.  Disable to improve performance on low-powered devices.",
+		default: true
 	});
 }
 
