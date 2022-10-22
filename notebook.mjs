@@ -8,7 +8,7 @@ export function openNotebook() {
 		ctx.characterStorage.setItem("notebook", "");
 	}
 
-	// Set up modal
+	// Set up modal with textarea
 	let props = {
 		title: "Handy Dandy Notebook",
 		input: "textarea",
@@ -16,9 +16,54 @@ export function openNotebook() {
 		showCloseButton: true,
 		showConfirmButton: false,
 		allowEnterKey: false,
-		customClass: { container: "notebook-modal" },
+		inputAttributes: {
+			maxlength: 8000,
+		},
+		customClass: {
+			container: "notebook-modal",
+			footer: "notebook-warning"
+		},
+		footer: "&nbsp;", // Valid character just to have it appear
 		didOpen: () => {
-			document.querySelector(".notebook-modal textarea").focus();
+			// Focus textarea on opening
+			const notebookTextarea = Swal.getInput();
+			notebookTextarea.focus();
+
+			// Init
+			let notebookData = notebookTextarea.value;
+			const footerNode = document.querySelector(".notebook-warning");
+			const encoder = new TextEncoder();
+
+			// Warn when close to limit (8KB, with a small amount of headroom)
+			const checkLengthAndUpdate = () => {
+				const currentBytes = encoder.encode(notebookData).byteLength;
+				if (currentBytes > 7500 && currentBytes < 8000) {
+					footerNode.style.display = "flex";
+					footerNode.dataset.warning = "approaching";
+				} else if (currentBytes >= 8000) {
+					footerNode.style.display = "flex";
+					footerNode.dataset.warning = "limit-reached";
+				} else {
+					footerNode.style.display = "none";
+					footerNode.dataset.warning = "";
+				}
+			};
+			checkLengthAndUpdate();
+
+			// On text change
+			Swal.getInput().addEventListener("input", () => {
+				// Update text and check again
+				notebookData = notebookTextarea.value;
+				checkLengthAndUpdate();
+
+				// Save to character
+				try {
+					ctx.characterStorage.setItem("notebook", notebookData);
+				}
+				catch(error) {
+					console.error("Cannot save notebook data.  Likely exceeded 8KB character storage limit.");
+				}
+			})
 		}
 	};
 
@@ -30,8 +75,6 @@ export function openNotebook() {
 		props.hideClass = {popup: ""};
 	}
 
-	// Trigger modal dialogue with notebook textarea and save result to character
-	Swal.fire(props).then(() => {
-		ctx.characterStorage.setItem("notebook", Swal.getInput().value);
-	});
+	// Trigger modal
+	Swal.fire(props);
 }
