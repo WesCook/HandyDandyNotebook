@@ -2,7 +2,7 @@
 // Function is called again when user changes setting
 // Accepts callback to run when clicked
 export function placeNotebookButton(cb, newValue) {
-	cleanup();
+	cleanupUI();
 
 	// Get notebook button position
 	let buttonPosition;
@@ -23,7 +23,7 @@ export function placeNotebookButton(cb, newValue) {
 }
 
 // Remove old buttons, tooltips, and sidebar entries
-function cleanup() {
+function cleanupUI() {
 	const notebook = document.getElementById("notebook");
 
 	// Destroy tooltip if it exists

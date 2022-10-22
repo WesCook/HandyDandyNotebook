@@ -22,7 +22,7 @@ function createSettings(settings, Button, openNotebook) {
 		name: "button-position",
 		label: "Notebook Button Position",
 		default: "topbar",
-		onChange: (newValue) => {
+		onChange: newValue => {
 			Button.placeNotebookButton(openNotebook, newValue);
 		},
 		options: [

@@ -36,12 +36,10 @@
 	border-top: none;
 	margin-top: 0;
 }
-
 .notebook-warning[data-warning="approaching"]::after {
 	content: "Warning: Approaching max character limit";
 	color: #ff5200;
 }
-
 .notebook-warning[data-warning="limit-reached"]::after {
 	content: "Max character limit reached";
 	color: red;
