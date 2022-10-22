@@ -17,7 +17,7 @@ export function openNotebook() {
 		showConfirmButton: false,
 		allowEnterKey: false,
 		inputAttributes: {
-			maxlength: 8000,
+			maxlength: 7800,
 		},
 		customClass: {
 			container: "notebook-modal",
@@ -37,10 +37,10 @@ export function openNotebook() {
 			// Warn when close to limit (8KB, with a small amount of headroom)
 			const checkLengthAndUpdate = () => {
 				const currentBytes = encoder.encode(notebookData).byteLength;
-				if (currentBytes > 7500 && currentBytes < 8000) {
+				if (currentBytes > 7300 && currentBytes < 7800) {
 					footerNode.style.display = "flex";
 					footerNode.dataset.warning = "approaching";
-				} else if (currentBytes >= 8000) {
+				} else if (currentBytes >= 7800) {
 					footerNode.style.display = "flex";
 					footerNode.dataset.warning = "limit-reached";
 				} else {
