@@ -8,6 +8,11 @@ export function openNotebook() {
 		ctx.characterStorage.setItem("notebook", "");
 	}
 
+	// Read in settings
+	const sectionInterface = ctx.settings.section("Interface");
+	const scrollPosition = sectionInterface.get("scroll-position");
+	const showAnimations = sectionInterface.get("show-animations");
+
 	// Set up modal with textarea
 	let props = {
 		title: "Handy Dandy Notebook",
@@ -28,6 +33,12 @@ export function openNotebook() {
 			// Focus textarea on opening
 			const notebookTextarea = Swal.getInput();
 			notebookTextarea.focus();
+
+			// Set scroll position to top if needed (defaults to bottom)
+			if (scrollPosition === "top") {
+				notebookTextarea.setSelectionRange(0, 0);
+				notebookTextarea.scrollTop = 0;
+			}
 
 			// Init
 			let notebookData = notebookTextarea.value;
@@ -68,8 +79,6 @@ export function openNotebook() {
 	};
 
 	// Conditionally disable animations
-	const sectionInterface = ctx.settings.section("Interface");
-	const showAnimations = sectionInterface.get("show-animations");
 	if (!showAnimations) {
 		props.showClass = {popup: ""};
 		props.hideClass = {popup: ""};

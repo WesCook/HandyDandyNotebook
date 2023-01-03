@@ -20,7 +20,7 @@ function createSettings(settings, Button, openNotebook) {
 	sectionInterface.add({
 		type: "dropdown",
 		name: "button-position",
-		label: "Notebook Button Position",
+		label: "Button Position",
 		default: "topbar",
 		onChange: newValue => {
 			Button.placeNotebookButton(openNotebook, newValue);
@@ -29,7 +29,21 @@ function createSettings(settings, Button, openNotebook) {
 			{ value: "topbar", display: "Top Bar" },
 			{ value: "minibar", display: "Minibar" },
 			{ value: "sidebar", display: "Sidebar" }
-		]
+		],
+		hint: "Where notebook button is placed in interface.",
+	});
+
+	// Scroll Position
+	sectionInterface.add({
+		type: "dropdown",
+		name: "scroll-position",
+		label: "Scroll Position",
+		default: "top",
+		options: [
+			{ value: "top", display: "Top" },
+			{ value: "bottom", display: "Bottom" }
+		],
+		hint: "Scroll to top or bottom of notebook when opening.",
 	});
 
 	// Show Animations

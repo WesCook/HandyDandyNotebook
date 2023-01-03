@@ -12,6 +12,9 @@ Your notes are saved separately for each character.  They're synced over cloud 
 
 ## Changelog
 
+v1.1.0 - 2023-01-03
+* Adding setting to choose default scroll position
+
 v1.0.1 - 2022-10-22
 * Reducing character limit to give online storage more headroom
 

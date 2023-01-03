@@ -84,7 +84,10 @@ function NotebookButton(template, cb) {
 	return {
 		$template: template,
 		clickedButton() {
-			document.getElementById("notebook").blur(); // Remove focus from button for visuals
+			// Remove focus from button for visuals
+			document.getElementById("notebook").blur();
+
+			// Run callback, which is likely openNotebook()
 			if (typeof cb === "function") {
 				cb();
 			}
