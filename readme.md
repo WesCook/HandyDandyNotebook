@@ -12,6 +12,9 @@ Your notes are saved separately for each character.  They're synced over cloud 
 
 ## Changelog
 
+v1.1.1 - 2023-04-12
+* Version bump for mod.io tagging
+
 v1.1.0 - 2023-01-03
 * Adding setting to choose default scroll position
 
