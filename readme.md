@@ -12,6 +12,9 @@ Your notes are saved separately for each character.  They're synced over cloud 
 
 ## Changelog
 
+v1.2.0 - 2023-04-17
+* Moving sidebar entry position from under Modding submenu to under Bank
+
 v1.1.1 - 2023-04-12
 * Version bump for mod.io tagging
 

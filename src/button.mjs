@@ -37,7 +37,7 @@ function cleanupUI() {
 	}
 
 	// Remove sidebar entry if it exists
-	sidebar.category("Modding").item("Handy Dandy Notebook").remove();
+	sidebar.category("").item("Handy Dandy Notebook").remove();
 }
 
 function placeButtonInTopbar(cb) {
@@ -72,7 +72,7 @@ function placeButtonInMinibar(cb) {
 function placeButtonInSidebar(cb) {
 	// Add sidebar
 	const ctx = mod.getContext(import.meta);
-	sidebar.category("Modding").item("Handy Dandy Notebook", {
+	sidebar.category("").item("Handy Dandy Notebook", {
 		nameClass: "notebook-sidebar",
 		icon: ctx.getResourceUrl("assets/notebook-icon-dark.png"),
 		onClick: cb
