@@ -12,17 +12,21 @@ Your notes are saved separately for each character.  They're synced over cloud 
 
 ## Changelog
 
+v1.2.1 - 2023-09-22
+- Minor CSS fix for notebook button
+- Version bump for mod.io tagging
+
 v1.2.0 - 2023-04-17
-* Moving sidebar entry position from under Modding submenu to under Bank
+- Moving sidebar entry position from under Modding submenu to under Bank
 
 v1.1.1 - 2023-04-12
-* Version bump for mod.io tagging
+- Version bump for mod.io tagging
 
 v1.1.0 - 2023-01-03
-* Adding setting to choose default scroll position
+- Adding setting to choose default scroll position
 
 v1.0.1 - 2022-10-22
-* Reducing character limit to give online storage more headroom
+- Reducing character limit to give online storage more headroom
 
 v1.0.0 - 2022-10-22
-* Initial release
+- Initial release

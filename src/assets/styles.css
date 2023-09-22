@@ -3,9 +3,12 @@
 	width: 32px;
 	min-width: 32px;
 	height: 32px;
+	margin-right: 4px;
 	background-image: var(--icon-light), linear-gradient(to right, #edf0f2, #edf0f2)  !important;
 	background-repeat: no-repeat !important;
 	background-size: contain;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 }
 .darkMode .notebook {
 	background-image: var(--icon-dark), linear-gradient(to right, #2d3542, #2d3542) !important;
