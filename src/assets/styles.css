@@ -1,22 +1,86 @@
 /* Notebook button */
-.notebook {
+.notebook-button {
 	width: 32px;
 	min-width: 32px;
 	height: 32px;
-	margin-right: 4px;
-	background-image: var(--icon-light), linear-gradient(to right, #edf0f2, #edf0f2)  !important;
+	background-image: var(--icon-light), linear-gradient(to right, #edf0f2, #edf0f2) !important;
 	background-repeat: no-repeat !important;
 	background-size: contain;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
 }
-.darkMode .notebook {
+.darkMode .notebook-button {
 	background-image: var(--icon-dark), linear-gradient(to right, #2d3542, #2d3542) !important;
 }
-.notebook.topbar:hover,
-.notebook.topbar:focus {
+.notebook-button.topbar:hover,
+.notebook-button.topbar:focus {
 	opacity: 80%;
 }
+
+
+/* Notebook window */
+.notebook-window {
+	display: none; /* Invisible by default */
+	background-color: #f9e8ce;
+	position: fixed;
+	transform: translate(500px, 400px); /* TODO: Can't use arbitrary coords */
+	z-index: 100;
+	left: 0;
+	top: 0;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+.notebook-window:focus-within {
+	box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+.notebook-window.drag {
+	box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+.notebook-titlebar {
+	position: relative;
+	color: black;
+	font-size: 1.4em;
+	padding: 10px;
+	user-select: none;
+	text-align: center;
+}
+.notebook-close {
+	all: unset;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+.notebook-close:hover,
+.notebook-close:focus {
+	color: #880000;
+}
+.notebook-window textarea {
+	display: block;
+	resize: both;
+	padding: 0 20px 20px 20px;
+	min-width: 350px;
+	width: 500px;
+	max-width: 800px;
+	min-height: 150px;
+	height: 340px;
+	max-height: 700px;
+	background-color: transparent;
+	border: none;
+	outline: none;
+	font-size: 1.5em;
+	line-height: 1.3;
+}
+
+/* Window scrollbar (Chrome-specific) */
+.notebook-window textarea:hover::-webkit-scrollbar-thumb,
+.notebook-window textarea:focus::-webkit-scrollbar-thumb {
+	visibility: visible;
+}
+.notebook-window textarea::-webkit-scrollbar-thumb {
+	background-color: darkgrey;
+	visibility: hidden;
+}
+.notebook-window textarea::-webkit-scrollbar {
+	width: 5px;
+}
+
 
 /* Notebook modal */
 .notebook-modal > .swal2-modal {
@@ -35,7 +99,7 @@
 
 /* Notebook length warning */
 .notebook-warning {
-	display: none; /* Enabled via JS */
+	display: none; /* Invisible by default, enabled via JS */
 	border-top: none;
 	margin-top: 0;
 }

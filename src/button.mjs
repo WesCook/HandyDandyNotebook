@@ -1,7 +1,7 @@
 // Create and place notebook button based on user setting
 // Function is called again when user changes setting
 // Accepts callback to run when clicked
-export function placeNotebookButton(cb, newValue) {
+export function placeButton(cb, newValue) {
 	cleanupUI();
 
 	// Get notebook button position
@@ -24,7 +24,7 @@ export function placeNotebookButton(cb, newValue) {
 
 // Remove old buttons, tooltips, and sidebar entries
 function cleanupUI() {
-	const notebook = document.getElementById("notebook");
+	const notebook = document.getElementById("notebook-button");
 
 	// Destroy tooltip if it exists
 	if (notebook && notebook._tippy) {
@@ -32,9 +32,7 @@ function cleanupUI() {
 	}
 
 	// Delete node
-	if (notebook) {
-		notebook.remove();
-	}
+	notebook?.remove();
 
 	// Remove sidebar entry if it exists
 	sidebar.category("").item("Handy Dandy Notebook").remove();
@@ -42,8 +40,8 @@ function cleanupUI() {
 
 function placeButtonInTopbar(cb) {
 	// Create notebook button
-	ui.create(NotebookButton("#notebook-button-topbar", cb), document.body);
-	const notebook = document.getElementById("notebook");
+	ui.create(NotebookButton("#template-notebook-button-topbar", cb), document.body);
+	const notebook = document.getElementById("notebook-button");
 
 	// Insert into position
 	// ui.create() lets us choose a parent, but not placement between elements
@@ -53,8 +51,8 @@ function placeButtonInTopbar(cb) {
 
 function placeButtonInMinibar(cb) {
 	// Create notebook button
-	ui.create(NotebookButton("#notebook-button-minibar", cb), document.body);
-	const notebook = document.getElementById("notebook");
+	ui.create(NotebookButton("#template-notebook-button-minibar", cb), document.body);
+	const notebook = document.getElementById("notebook-button");
 
 	// Insert into position
 	const minibar = document.getElementById("skill-footer-minibar");
@@ -85,9 +83,9 @@ function NotebookButton(template, cb) {
 		$template: template,
 		clickedButton() {
 			// Remove focus from button for visuals
-			document.getElementById("notebook").blur();
+			document.getElementById("notebook-button").blur();
 
-			// Run callback, which is likely openNotebook()
+			// Run callback, which is expected to be launchNotebook()
 			if (typeof cb === "function") {
 				cb();
 			}

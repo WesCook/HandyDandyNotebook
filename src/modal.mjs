@@ -1,5 +1,5 @@
-// Open notebook modal
-export function openNotebook() {
+// Open notebook modal via Swal2 library
+export function openModal() {
 	// Get notebook data and reset if undefined
 	const ctx = mod.getContext(import.meta);
 	let notebookText = ctx.characterStorage.getItem("notebook"); // Load from character

@@ -1,20 +1,40 @@
+let NotebookButton;
+let NotebookWindow;
+let NotebookModal;
+
 export async function setup({ loadModule, settings, onInterfaceReady }) {
 	// Modules
-	const Button = await loadModule("button.mjs");
-	const { openNotebook } = await loadModule("notebook.mjs");
+	NotebookButton = await loadModule("button.mjs");
+	NotebookWindow = await loadModule("window.mjs");
+	NotebookModal = await loadModule("modal.mjs");
 
 	// Settings
-	createSettings(settings, Button, openNotebook);
+	createSettings(settings);
 
 	// Interface Setup
 	onInterfaceReady(ctx => {
 		createIconCSS(ctx);
-		Button.placeNotebookButton(openNotebook);
+		windowSetupAndCleanup();
+		NotebookButton.placeButton(launchNotebook);
 	});
 }
 
-function createSettings(settings, Button, openNotebook) {
+function createSettings(settings) {
 	const sectionInterface = settings.section("Interface");
+
+	// Preferred UI
+	sectionInterface.add({
+		type: "dropdown",
+		name: "preferred-ui",
+		label: "Preferred UI",
+		default: "window",
+		onChange: newValue => windowSetupAndCleanup(newValue),
+		options: [
+			{ value: "window", display: "Window" },
+			{ value: "modal", display: "Modal" }
+		],
+		hint: "Display as draggable window or classic modal.",
+	});
 
 	// Button Position
 	sectionInterface.add({
@@ -22,9 +42,7 @@ function createSettings(settings, Button, openNotebook) {
 		name: "button-position",
 		label: "Button Position",
 		default: "topbar",
-		onChange: newValue => {
-			Button.placeNotebookButton(openNotebook, newValue);
-		},
+		onChange: newValue => NotebookButton.placeButton(launchNotebook, newValue),
 		options: [
 			{ value: "topbar", display: "Top Bar" },
 			{ value: "minibar", display: "Minibar" },
@@ -51,7 +69,7 @@ function createSettings(settings, Button, openNotebook) {
 		type: "switch",
 		name: "show-animations",
 		label: "Show Animations",
-		hint: "Show popup and leave animations.  Disable to improve performance on low-powered devices.",
+		hint: "Show popup and leave animations on modal UI.  Disable to improve performance on low-powered devices.",
 		default: true
 	});
 }
@@ -65,9 +83,46 @@ function createSettings(settings, Button, openNotebook) {
 function createIconCSS(ctx) {
 	document.head.insertAdjacentHTML("beforeend",
 	`<style>
-	.notebook {
+	.notebook-button {
 		--icon-light: url("${ctx.getResourceUrl("assets/notebook-icon-light.png")}");
 		--icon-dark: url("${ctx.getResourceUrl("assets/notebook-icon-dark.png")}");
 	}
 	</style>`);
+}
+
+function launchNotebook() {
+	// Read in settings
+	const ctx = mod.getContext(import.meta);
+	const sectionInterface = ctx.settings.section("Interface");
+	const preferredUI = sectionInterface.get("preferred-ui");
+
+	// Launch appropriate type of window based on character setting
+	if (preferredUI === "window") {
+		NotebookWindow.toggleWindow();
+	} else {
+		NotebookModal.openModal();
+	}
+}
+
+// Set up or destroy event listeners, based on preferred UI
+// newValue is only populated when changing settings
+function windowSetupAndCleanup(newValue) {
+	// Get preferred UI
+	let preferredUI;
+	if (newValue) { // If receiving update from settings change callback
+		preferredUI = newValue;
+	} else { // Otherwise fall back to saved value
+		const ctx = mod.getContext(import.meta);
+		const sectionInterface = ctx.settings.section("Interface");
+		preferredUI = sectionInterface.get("preferred-ui");
+	}
+
+	// First destroy any notebook DOM nodes or event listeners used during during character load or settings changes, since these are not cleaned up when switching characters
+	// Then recreate them, if the preferred UI is window
+	NotebookWindow.destroyEventListeners();
+	document.getElementById("notebook-window")?.remove();
+	if (preferredUI === "window") { // Then we create them if needed
+		NotebookWindow.createWindow();
+		NotebookWindow.setupEventListeners();
+	}
 }

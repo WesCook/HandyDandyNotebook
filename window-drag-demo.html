@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Draggable Test</title>
+	<style>
+		body {
+			background-color: #222;
+			background-image: url("https://melvoridle.com/assets/media/main/bg_0.jpg");
+			margin: 0;
+		}
+		.notebook-window {
+			background-color: #f9e8ce;
+			position: fixed;
+			transform: translate(500px, 400px);
+			z-index: 100;
+			left: 0;
+			top: 0;
+			box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+		}
+		.notebook-window:focus-within {
+			box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+		}
+		.notebook-window.drag {
+			box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+		}
+		.notebook-titlebar {
+			position: relative;
+			color: black;
+			font-size: 1.4em;
+			padding: 10px;
+			user-select: none;
+			text-align: center;
+		}
+		.notebook-close {
+			all: unset;
+			position: absolute;
+			top: 10px;
+			right: 10px;
+		}
+		.notebook-close:hover,
+		.notebook-close:focus {
+			color: #880000;
+		}
+		.notebook-window textarea {
+			display: block;
+			padding: 0 20px 20px 20px;
+			min-width: 350px;
+			width: 500px;
+			max-width: 800px;
+			min-height: 150px;
+			height: 340px;
+			max-height: 700px;
+			background-color: transparent;
+			border: none;
+			outline: none;
+			font-size: 1.5em;
+			line-height: 1.3;
+		}
+
+		.dummy-text {
+			display: none;
+			color: #ccc;
+		}
+
+		/* Chrome-specific scrollbar */
+		.notebook-window textarea:hover::-webkit-scrollbar-thumb,
+		.notebook-window textarea:focus::-webkit-scrollbar-thumb {
+			visibility: visible;
+		}
+		.notebook-window textarea::-webkit-scrollbar-thumb {
+			background-color: darkgrey;
+			visibility: hidden;
+		}
+		.notebook-window textarea::-webkit-scrollbar {
+			width: 5px;
+		}
+	</style>
+</head>
+<body>
+
+	<button onClick="const dummyText = document.getElementById('dummy-text'); dummyText.style.display = (dummyText.style.display === 'block') ? 'none' : 'block';">Toggle Text</button>
+
+	<button onClick="const elemNotebook = document.getElementById('notebook-window'); elemNotebook.style.display = (elemNotebook.style.display === 'none') ? 'block' : 'none';">Toggle Notebook</button>
+
+	<div id="dummy-text" class="dummy-text">
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quam urna, malesuada eu odio sed, commodo placerat felis. Praesent et justo vestibulum massa ultricies congue. Morbi posuere ligula id metus consectetur, id ullamcorper turpis lacinia. Etiam ullamcorper augue vitae ligula pulvinar ultrices. Cras placerat sem purus, eu pellentesque nulla tristique id. Nulla facilisi. Nam commodo maximus ligula, accumsan consequat elit consequat ac. Fusce tempus leo in facilisis dictum. Nam sapien leo, interdum ac nisl ac, cursus luctus metus. Curabitur porta sapien et arcu aliquet, a rhoncus ex consectetur. Vivamus eu arcu varius, laoreet nisi in, eleifend justo.</p>
+		<p>Phasellus mi metus, posuere eu facilisis vel, elementum a magna. Phasellus rutrum ultrices tortor, quis consectetur sapien tristique et. In consequat tortor ut libero condimentum, in lacinia mi pulvinar. Pellentesque ultricies iaculis gravida. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut sagittis volutpat scelerisque. Mauris sagittis eros quis ante hendrerit tempor. Aliquam varius nunc vitae mi pretium, eu scelerisque arcu consequat. Vestibulum pretium sit amet nulla at hendrerit. Phasellus a efficitur orci. Nullam fermentum, nisl id eleifend sollicitudin, metus massa bibendum nibh, sed posuere elit elit ut nunc. Etiam in velit ut nibh vehicula lacinia nec eu lacus. Vivamus convallis nibh in hendrerit convallis. Sed pulvinar ex mollis, condimentum elit nec, blandit lacus. Donec ac enim fermentum, egestas ante at, pharetra est.</p>
+		<p>Fusce fermentum non justo vitae cursus. Curabitur pharetra massa felis, a gravida dolor lobortis ut. Morbi tempus dolor sapien, sit amet convallis dolor porttitor ut. Integer placerat nulla odio, eu ultricies diam interdum vitae. Nam non odio bibendum, pulvinar leo et, semper mauris. Mauris dapibus, justo nec pretium tempor, justo augue volutpat ligula, eget scelerisque felis nisl nec orci. In hac habitasse platea dictumst. Fusce vitae elit feugiat, volutpat nulla sit amet, interdum felis. Nunc at finibus eros, id ultricies libero.</p>
+		<p>Sed in leo in velit porttitor congue. Vivamus interdum volutpat fermentum. Phasellus porta leo et metus laoreet laoreet. Praesent interdum, metus egestas tincidunt sagittis, mauris tortor cursus libero, quis varius nisi lorem varius enim. Maecenas euismod in sapien in auctor. Vivamus ut nunc porta, cursus enim eu, elementum tellus. Vestibulum eu libero at mauris porttitor sagittis. Donec rutrum ante sit amet augue tincidunt pharetra. Etiam leo tortor, lobortis vel scelerisque non, egestas ut mi. Vestibulum erat sapien, tincidunt id fringilla vitae, iaculis non odio. Ut et nulla sit amet nunc condimentum dignissim. Morbi et quam quam. Vestibulum interdum lectus justo, id sagittis velit luctus eget. Proin interdum commodo turpis a dignissim. Morbi imperdiet ac nisi eu porta. Integer sodales lorem sed aliquet efficitur.</p>
+		<p>In id leo suscipit, pellentesque tortor eu, molestie felis. Integer sed justo quis neque feugiat rutrum. Sed pretium ligula et sapien faucibus, non dictum elit laoreet. Aliquam convallis risus sed dictum aliquet. Duis non imperdiet tortor, sit amet aliquet massa. Nam ut accumsan ante, id mattis dui. Suspendisse potenti. Vivamus tincidunt pretium tristique. Integer lorem eros, consectetur ac luctus quis, eleifend sed risus. Quisque feugiat diam nibh. Sed interdum consectetur dignissim.</p>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quam urna, malesuada eu odio sed, commodo placerat felis. Praesent et justo vestibulum massa ultricies congue. Morbi posuere ligula id metus consectetur, id ullamcorper turpis lacinia. Etiam ullamcorper augue vitae ligula pulvinar ultrices. Cras placerat sem purus, eu pellentesque nulla tristique id. Nulla facilisi. Nam commodo maximus ligula, accumsan consequat elit consequat ac. Fusce tempus leo in facilisis dictum. Nam sapien leo, interdum ac nisl ac, cursus luctus metus. Curabitur porta sapien et arcu aliquet, a rhoncus ex consectetur. Vivamus eu arcu varius, laoreet nisi in, eleifend justo.</p>
+		<p>Phasellus mi metus, posuere eu facilisis vel, elementum a magna. Phasellus rutrum ultrices tortor, quis consectetur sapien tristique et. In consequat tortor ut libero condimentum, in lacinia mi pulvinar. Pellentesque ultricies iaculis gravida. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut sagittis volutpat scelerisque. Mauris sagittis eros quis ante hendrerit tempor. Aliquam varius nunc vitae mi pretium, eu scelerisque arcu consequat. Vestibulum pretium sit amet nulla at hendrerit. Phasellus a efficitur orci. Nullam fermentum, nisl id eleifend sollicitudin, metus massa bibendum nibh, sed posuere elit elit ut nunc. Etiam in velit ut nibh vehicula lacinia nec eu lacus. Vivamus convallis nibh in hendrerit convallis. Sed pulvinar ex mollis, condimentum elit nec, blandit lacus. Donec ac enim fermentum, egestas ante at, pharetra est.</p>
+		<p>Fusce fermentum non justo vitae cursus. Curabitur pharetra massa felis, a gravida dolor lobortis ut. Morbi tempus dolor sapien, sit amet convallis dolor porttitor ut. Integer placerat nulla odio, eu ultricies diam interdum vitae. Nam non odio bibendum, pulvinar leo et, semper mauris. Mauris dapibus, justo nec pretium tempor, justo augue volutpat ligula, eget scelerisque felis nisl nec orci. In hac habitasse platea dictumst. Fusce vitae elit feugiat, volutpat nulla sit amet, interdum felis. Nunc at finibus eros, id ultricies libero.</p>
+		<p>Sed in leo in velit porttitor congue. Vivamus interdum volutpat fermentum. Phasellus porta leo et metus laoreet laoreet. Praesent interdum, metus egestas tincidunt sagittis, mauris tortor cursus libero, quis varius nisi lorem varius enim. Maecenas euismod in sapien in auctor. Vivamus ut nunc porta, cursus enim eu, elementum tellus. Vestibulum eu libero at mauris porttitor sagittis. Donec rutrum ante sit amet augue tincidunt pharetra. Etiam leo tortor, lobortis vel scelerisque non, egestas ut mi. Vestibulum erat sapien, tincidunt id fringilla vitae, iaculis non odio. Ut et nulla sit amet nunc condimentum dignissim. Morbi et quam quam. Vestibulum interdum lectus justo, id sagittis velit luctus eget. Proin interdum commodo turpis a dignissim. Morbi imperdiet ac nisi eu porta. Integer sodales lorem sed aliquet efficitur.</p>
+		<p>In id leo suscipit, pellentesque tortor eu, molestie felis. Integer sed justo quis neque feugiat rutrum. Sed pretium ligula et sapien faucibus, non dictum elit laoreet. Aliquam convallis risus sed dictum aliquet. Duis non imperdiet tortor, sit amet aliquet massa. Nam ut accumsan ante, id mattis dui. Suspendisse potenti. Vivamus tincidunt pretium tristique. Integer lorem eros, consectetur ac luctus quis, eleifend sed risus. Quisque feugiat diam nibh. Sed interdum consectetur dignissim.</p>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quam urna, malesuada eu odio sed, commodo placerat felis. Praesent et justo vestibulum massa ultricies congue. Morbi posuere ligula id metus consectetur, id ullamcorper turpis lacinia. Etiam ullamcorper augue vitae ligula pulvinar ultrices. Cras placerat sem purus, eu pellentesque nulla tristique id. Nulla facilisi. Nam commodo maximus ligula, accumsan consequat elit consequat ac. Fusce tempus leo in facilisis dictum. Nam sapien leo, interdum ac nisl ac, cursus luctus metus. Curabitur porta sapien et arcu aliquet, a rhoncus ex consectetur. Vivamus eu arcu varius, laoreet nisi in, eleifend justo.</p>
+		<p>Phasellus mi metus, posuere eu facilisis vel, elementum a magna. Phasellus rutrum ultrices tortor, quis consectetur sapien tristique et. In consequat tortor ut libero condimentum, in lacinia mi pulvinar. Pellentesque ultricies iaculis gravida. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut sagittis volutpat scelerisque. Mauris sagittis eros quis ante hendrerit tempor. Aliquam varius nunc vitae mi pretium, eu scelerisque arcu consequat. Vestibulum pretium sit amet nulla at hendrerit. Phasellus a efficitur orci. Nullam fermentum, nisl id eleifend sollicitudin, metus massa bibendum nibh, sed posuere elit elit ut nunc. Etiam in velit ut nibh vehicula lacinia nec eu lacus. Vivamus convallis nibh in hendrerit convallis. Sed pulvinar ex mollis, condimentum elit nec, blandit lacus. Donec ac enim fermentum, egestas ante at, pharetra est.</p>
+		<p>Fusce fermentum non justo vitae cursus. Curabitur pharetra massa felis, a gravida dolor lobortis ut. Morbi tempus dolor sapien, sit amet convallis dolor porttitor ut. Integer placerat nulla odio, eu ultricies diam interdum vitae. Nam non odio bibendum, pulvinar leo et, semper mauris. Mauris dapibus, justo nec pretium tempor, justo augue volutpat ligula, eget scelerisque felis nisl nec orci. In hac habitasse platea dictumst. Fusce vitae elit feugiat, volutpat nulla sit amet, interdum felis. Nunc at finibus eros, id ultricies libero.</p>
+		<p>Sed in leo in velit porttitor congue. Vivamus interdum volutpat fermentum. Phasellus porta leo et metus laoreet laoreet. Praesent interdum, metus egestas tincidunt sagittis, mauris tortor cursus libero, quis varius nisi lorem varius enim. Maecenas euismod in sapien in auctor. Vivamus ut nunc porta, cursus enim eu, elementum tellus. Vestibulum eu libero at mauris porttitor sagittis. Donec rutrum ante sit amet augue tincidunt pharetra. Etiam leo tortor, lobortis vel scelerisque non, egestas ut mi. Vestibulum erat sapien, tincidunt id fringilla vitae, iaculis non odio. Ut et nulla sit amet nunc condimentum dignissim. Morbi et quam quam. Vestibulum interdum lectus justo, id sagittis velit luctus eget. Proin interdum commodo turpis a dignissim. Morbi imperdiet ac nisi eu porta. Integer sodales lorem sed aliquet efficitur.</p>
+		<p>In id leo suscipit, pellentesque tortor eu, molestie felis. Integer sed justo quis neque feugiat rutrum. Sed pretium ligula et sapien faucibus, non dictum elit laoreet. Aliquam convallis risus sed dictum aliquet. Duis non imperdiet tortor, sit amet aliquet massa. Nam ut accumsan ante, id mattis dui. Suspendisse potenti. Vivamus tincidunt pretium tristique. Integer lorem eros, consectetur ac luctus quis, eleifend sed risus. Quisque feugiat diam nibh. Sed interdum consectetur dignissim.</p>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quam urna, malesuada eu odio sed, commodo placerat felis. Praesent et justo vestibulum massa ultricies congue. Morbi posuere ligula id metus consectetur, id ullamcorper turpis lacinia. Etiam ullamcorper augue vitae ligula pulvinar ultrices. Cras placerat sem purus, eu pellentesque nulla tristique id. Nulla facilisi. Nam commodo maximus ligula, accumsan consequat elit consequat ac. Fusce tempus leo in facilisis dictum. Nam sapien leo, interdum ac nisl ac, cursus luctus metus. Curabitur porta sapien et arcu aliquet, a rhoncus ex consectetur. Vivamus eu arcu varius, laoreet nisi in, eleifend justo.</p>
+		<p>Phasellus mi metus, posuere eu facilisis vel, elementum a magna. Phasellus rutrum ultrices tortor, quis consectetur sapien tristique et. In consequat tortor ut libero condimentum, in lacinia mi pulvinar. Pellentesque ultricies iaculis gravida. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut sagittis volutpat scelerisque. Mauris sagittis eros quis ante hendrerit tempor. Aliquam varius nunc vitae mi pretium, eu scelerisque arcu consequat. Vestibulum pretium sit amet nulla at hendrerit. Phasellus a efficitur orci. Nullam fermentum, nisl id eleifend sollicitudin, metus massa bibendum nibh, sed posuere elit elit ut nunc. Etiam in velit ut nibh vehicula lacinia nec eu lacus. Vivamus convallis nibh in hendrerit convallis. Sed pulvinar ex mollis, condimentum elit nec, blandit lacus. Donec ac enim fermentum, egestas ante at, pharetra est.</p>
+		<p>Fusce fermentum non justo vitae cursus. Curabitur pharetra massa felis, a gravida dolor lobortis ut. Morbi tempus dolor sapien, sit amet convallis dolor porttitor ut. Integer placerat nulla odio, eu ultricies diam interdum vitae. Nam non odio bibendum, pulvinar leo et, semper mauris. Mauris dapibus, justo nec pretium tempor, justo augue volutpat ligula, eget scelerisque felis nisl nec orci. In hac habitasse platea dictumst. Fusce vitae elit feugiat, volutpat nulla sit amet, interdum felis. Nunc at finibus eros, id ultricies libero.</p>
+		<p>Sed in leo in velit porttitor congue. Vivamus interdum volutpat fermentum. Phasellus porta leo et metus laoreet laoreet. Praesent interdum, metus egestas tincidunt sagittis, mauris tortor cursus libero, quis varius nisi lorem varius enim. Maecenas euismod in sapien in auctor. Vivamus ut nunc porta, cursus enim eu, elementum tellus. Vestibulum eu libero at mauris porttitor sagittis. Donec rutrum ante sit amet augue tincidunt pharetra. Etiam leo tortor, lobortis vel scelerisque non, egestas ut mi. Vestibulum erat sapien, tincidunt id fringilla vitae, iaculis non odio. Ut et nulla sit amet nunc condimentum dignissim. Morbi et quam quam. Vestibulum interdum lectus justo, id sagittis velit luctus eget. Proin interdum commodo turpis a dignissim. Morbi imperdiet ac nisi eu porta. Integer sodales lorem sed aliquet efficitur.</p>
+		<p>In id leo suscipit, pellentesque tortor eu, molestie felis. Integer sed justo quis neque feugiat rutrum. Sed pretium ligula et sapien faucibus, non dictum elit laoreet. Aliquam convallis risus sed dictum aliquet. Duis non imperdiet tortor, sit amet aliquet massa. Nam ut accumsan ante, id mattis dui. Suspendisse potenti. Vivamus tincidunt pretium tristique. Integer lorem eros, consectetur ac luctus quis, eleifend sed risus. Quisque feugiat diam nibh. Sed interdum consectetur dignissim.</p>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quam urna, malesuada eu odio sed, commodo placerat felis. Praesent et justo vestibulum massa ultricies congue. Morbi posuere ligula id metus consectetur, id ullamcorper turpis lacinia. Etiam ullamcorper augue vitae ligula pulvinar ultrices. Cras placerat sem purus, eu pellentesque nulla tristique id. Nulla facilisi. Nam commodo maximus ligula, accumsan consequat elit consequat ac. Fusce tempus leo in facilisis dictum. Nam sapien leo, interdum ac nisl ac, cursus luctus metus. Curabitur porta sapien et arcu aliquet, a rhoncus ex consectetur. Vivamus eu arcu varius, laoreet nisi in, eleifend justo.</p>
+		<p>Phasellus mi metus, posuere eu facilisis vel, elementum a magna. Phasellus rutrum ultrices tortor, quis consectetur sapien tristique et. In consequat tortor ut libero condimentum, in lacinia mi pulvinar. Pellentesque ultricies iaculis gravida. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut sagittis volutpat scelerisque. Mauris sagittis eros quis ante hendrerit tempor. Aliquam varius nunc vitae mi pretium, eu scelerisque arcu consequat. Vestibulum pretium sit amet nulla at hendrerit. Phasellus a efficitur orci. Nullam fermentum, nisl id eleifend sollicitudin, metus massa bibendum nibh, sed posuere elit elit ut nunc. Etiam in velit ut nibh vehicula lacinia nec eu lacus. Vivamus convallis nibh in hendrerit convallis. Sed pulvinar ex mollis, condimentum elit nec, blandit lacus. Donec ac enim fermentum, egestas ante at, pharetra est.</p>
+		<p>Fusce fermentum non justo vitae cursus. Curabitur pharetra massa felis, a gravida dolor lobortis ut. Morbi tempus dolor sapien, sit amet convallis dolor porttitor ut. Integer placerat nulla odio, eu ultricies diam interdum vitae. Nam non odio bibendum, pulvinar leo et, semper mauris. Mauris dapibus, justo nec pretium tempor, justo augue volutpat ligula, eget scelerisque felis nisl nec orci. In hac habitasse platea dictumst. Fusce vitae elit feugiat, volutpat nulla sit amet, interdum felis. Nunc at finibus eros, id ultricies libero.</p>
+		<p>Sed in leo in velit porttitor congue. Vivamus interdum volutpat fermentum. Phasellus porta leo et metus laoreet laoreet. Praesent interdum, metus egestas tincidunt sagittis, mauris tortor cursus libero, quis varius nisi lorem varius enim. Maecenas euismod in sapien in auctor. Vivamus ut nunc porta, cursus enim eu, elementum tellus. Vestibulum eu libero at mauris porttitor sagittis. Donec rutrum ante sit amet augue tincidunt pharetra. Etiam leo tortor, lobortis vel scelerisque non, egestas ut mi. Vestibulum erat sapien, tincidunt id fringilla vitae, iaculis non odio. Ut et nulla sit amet nunc condimentum dignissim. Morbi et quam quam. Vestibulum interdum lectus justo, id sagittis velit luctus eget. Proin interdum commodo turpis a dignissim. Morbi imperdiet ac nisi eu porta. Integer sodales lorem sed aliquet efficitur.</p>
+		<p>In id leo suscipit, pellentesque tortor eu, molestie felis. Integer sed justo quis neque feugiat rutrum. Sed pretium ligula et sapien faucibus, non dictum elit laoreet. Aliquam convallis risus sed dictum aliquet. Duis non imperdiet tortor, sit amet aliquet massa. Nam ut accumsan ante, id mattis dui. Suspendisse potenti. Vivamus tincidunt pretium tristique. Integer lorem eros, consectetur ac luctus quis, eleifend sed risus. Quisque feugiat diam nibh. Sed interdum consectetur dignissim.</p>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quam urna, malesuada eu odio sed, commodo placerat felis. Praesent et justo vestibulum massa ultricies congue. Morbi posuere ligula id metus consectetur, id ullamcorper turpis lacinia. Etiam ullamcorper augue vitae ligula pulvinar ultrices. Cras placerat sem purus, eu pellentesque nulla tristique id. Nulla facilisi. Nam commodo maximus ligula, accumsan consequat elit consequat ac. Fusce tempus leo in facilisis dictum. Nam sapien leo, interdum ac nisl ac, cursus luctus metus. Curabitur porta sapien et arcu aliquet, a rhoncus ex consectetur. Vivamus eu arcu varius, laoreet nisi in, eleifend justo.</p>
+		<p>Phasellus mi metus, posuere eu facilisis vel, elementum a magna. Phasellus rutrum ultrices tortor, quis consectetur sapien tristique et. In consequat tortor ut libero condimentum, in lacinia mi pulvinar. Pellentesque ultricies iaculis gravida. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut sagittis volutpat scelerisque. Mauris sagittis eros quis ante hendrerit tempor. Aliquam varius nunc vitae mi pretium, eu scelerisque arcu consequat. Vestibulum pretium sit amet nulla at hendrerit. Phasellus a efficitur orci. Nullam fermentum, nisl id eleifend sollicitudin, metus massa bibendum nibh, sed posuere elit elit ut nunc. Etiam in velit ut nibh vehicula lacinia nec eu lacus. Vivamus convallis nibh in hendrerit convallis. Sed pulvinar ex mollis, condimentum elit nec, blandit lacus. Donec ac enim fermentum, egestas ante at, pharetra est.</p>
+	</div>
+
+	<div id="notebook-window" class="notebook-window">
+		<div draggable="true" id="notebook-titlebar" class="notebook-titlebar">
+			<span>Notebook</span>
+			<button id="notebook-close" class="notebook-close" onClick="document.getElementById('notebook-window').style.display = 'none';">✖</button>
+		</div>
+		<div>
+			<textarea>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sodales a tellus id dignissim. Nullam eget lectus tellus.
+
+Sed dictum enim eu ipsum finibus pretium. Sed et nulla lacinia, accumsan orci ornare, tempus risus. Etiam vel suscipit dui, eu suscipit purus. Duis at magna vel magna gravida commodo. Vivamus eget urna euismod, blandit eros in, egestas mi.
+
+Vivamus commodo tortor non mi hendrerit, in tempus lectus pharetra. Cras sed scelerisque elit.
+
+Vestibulum tempus a purus id tristique. Curabitur varius, nibh ornare vehicula tincidunt, nibh est mollis enim, et sodales ex diam in eros.
+
+Cras non nulla lorem. Integer tincidunt, velit in lacinia interdum, ante nisi aliquet ante, in scelerisque lorem ex sed arcu.
+			</textarea>
+		</div>
+	</div>
+
+
+	<script>
+		const notebook = document.getElementById("notebook-window");
+		const titlebar = document.getElementById("notebook-titlebar");
+		const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
+
+		// Get initial x/y pos from style
+		let styles = getComputedStyle(notebook);
+		let matrix = new DOMMatrix(styles.transform);
+		let notebookX = matrix.e || 0; // translateX() value
+		let notebookY = matrix.f || 0; // translateY() value
+
+		let mouseX = 0;
+		let mouseY = 0;
+		let mouseOffsetX = 0;
+		let mouseOffsetY = 0;
+		let canUpdateMousePos = false;
+
+		document.addEventListener("dragover", function(event) {
+			canUpdateMousePos = true;
+
+			// Update mouse positions
+			// Workaround for Firefox, else we could just access clientX in drag event
+			// https://bugzilla.mozilla.org/show_bug.cgi?id=505521
+			mouseX = event.clientX;
+			mouseY = event.clientY;
+
+			// Allow dragging anywhere on document
+			event.preventDefault();
+			return false;
+		});
+
+		titlebar.addEventListener("dragstart", event => {
+			// Set drag class
+			notebook.classList.add("drag");
+
+			// Update offset to grab coordinates
+			mouseOffsetX = event.clientX - notebookX;
+			mouseOffsetY = event.clientY - notebookY;
+
+			// Hide translucent draggable preview
+			event.dataTransfer.setDragImage(new Image(), 0, 0);
+
+			// Update cursor icon
+			event.dataTransfer.effectAllowed = "move";
+		});
+
+		// Clear drag class
+		titlebar.addEventListener("dragend", event => {
+			canUpdateMousePos = false;
+			notebook.classList.remove("drag");
+		});
+
+		// Update notebook position
+		titlebar.addEventListener("drag", event => {
+			// The `drag` event fires before `dragover`, so there's one frame where the update tries to use the old mouse position
+			// This variable prevents the update from running until `dragover` has had a chance to update the mouse position
+			// Mostly needed for Firefox, as other browsers produce usable mouse coordinates in this `drag` event
+			if (!canUpdateMousePos) {
+				return;
+			}
+
+			// If mouse position is available in event, use it rather than dragover event
+			if (event.clientX !== 0 && event.clientY !== 0) {
+				mouseX = event.clientX;
+				mouseY = event.clientY;
+			}
+
+			// Both values being zero likely means it was dragged offscreen, so ignore update
+			if (mouseX === 0 && mouseY === 0) {
+				return;
+			}
+
+			// Calculate and update position
+			notebookX = clamp(0, mouseX - mouseOffsetX, document.documentElement.clientWidth - notebook.offsetWidth);
+			notebookY = clamp(0, mouseY - mouseOffsetY, document.documentElement.clientHeight - notebook.offsetHeight);
+			notebook.style.transform = `translate(${notebookX}px, ${notebookY}px)`;
+		});
+
+		// Constrain to document if window size changes
+		// Note: Chrome dev tools will sometimes be invisible when "restoring down" the window.  Expanding the window will have it reappear, but in the meantime the page's scrollWidth/Height is set very low, resulting in the notebook appearing at the edge of the window.
+		window.addEventListener("resize", event => {
+			notebookX = clamp(0, notebookX, document.documentElement.clientWidth - notebook.offsetWidth);
+			notebookY = clamp(0, notebookY, document.documentElement.clientHeight - notebook.offsetHeight);
+			notebook.style.transform = `translate(${notebookX}px, ${notebookY}px)`;
+		});
+	</script>
+</body>
+</html>

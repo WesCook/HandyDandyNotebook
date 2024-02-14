@@ -2,6 +2,8 @@
 
 An interactable notebook (or notepad) for jotting down information in [Melvor Idle](https://melvoridle.com/).  There are no organizational features such as pages or sections, nor will there be.  It's just a handy dandy notebook!
 
+Experimental branch for alternative window system.
+
 ![Notebook Interface](assets/notebook-screenshot.png "Notebook Interface")
 
 The notebook button can be positioned in the top bar, minibar, or sidebar.  Animations can be toggled off in settings.

@@ -1,9 +1,19 @@
-<template id="notebook-button-topbar">
-	<button id="notebook" class="notebook topbar btn btn-sm ml-2" aria-haspopup="true" @click="clickedButton" title="Handy Dandy Notebook"></button>
+<template id="template-notebook-button-topbar">
+	<button id="notebook-button" class="notebook-button topbar btn btn-sm ml-2" aria-haspopup="true" @click="clickedButton" title="Handy Dandy Notebook"></button>
 </template>
 
-<template id="notebook-button-minibar">
-	<button id="notebook" class="minibar btn btn-sm btn-light" aria-haspopup="true" @click="clickedButton">
-		<div class="notebook"></div>
+<template id="template-notebook-button-minibar">
+	<button id="notebook-button" class="minibar btn btn-sm btn-light" aria-haspopup="true" @click="clickedButton">
+		<div class="notebook-button"></div>
 	</button>
+</template>
+
+<template id="template-notebook-window">
+	<div id="notebook-window" class="notebook-window">
+		<div id="notebook-titlebar" class="notebook-titlebar" draggable="true">
+			<span>Notebook</span>
+			<button id="notebook-close" class="notebook-close">✖</button>
+		</div>
+		<textarea></textarea>
+	</div>
 </template>
